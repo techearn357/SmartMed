@@ -18,9 +18,33 @@ app.use('/api/history', require('./routes/historyRoutes'));
 app.use('/api/caregivers', require('./routes/caregiverRoutes'));
 app.use('/api/adherence', require('./routes/adherenceRoutes'));
 
-// Health check endpoint
+// Root endpoint
+app.get('/', (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: 'SmartMed API is running',
+        status: 'healthy',
+        timezone: 'Asia/Kolkata'
+    });
+});
+
+// Health check endpoints
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: 'SmartMed backend is healthy',
+        status: 'healthy',
+        timezone: 'Asia/Kolkata'
+    });
+});
+
 app.get('/api/health', (req, res) => {
-    res.status(200).json({ status: 'OK', message: 'SmartMed Backend API is running' });
+    res.status(200).json({
+        success: true,
+        message: 'SmartMed backend is healthy',
+        status: 'healthy',
+        timezone: 'Asia/Kolkata'
+    });
 });
 
 // Debug: manually trigger the missed dose reminder check
