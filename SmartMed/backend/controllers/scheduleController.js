@@ -48,7 +48,7 @@ const getSchedules = async (req, res) => {
 const getTodaySchedules = async (req, res) => {
     try {
         const now = new Date();
-        const todayStr = now.toISOString().split('T')[0];
+        const todayStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(now);
 
         // Fetch active medicines for this user first
         const activeMeds = await Medicine.find({ userId: req.user.id, active: true });

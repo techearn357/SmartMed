@@ -5,55 +5,76 @@ const User = require('../models/User');
 const Caregiver = require('../models/Caregiver');
 const { sendEmail } = require('./emailService');
 
+const TIMEZONE = 'Asia/Kolkata';
+
 /**
- * Checks for overdue medication doses and sends automated email reminders to patients and caregivers.
+ * Returns formatted date string "YYYY-MM-DD" for a given Date in IST.
+ */
+const getIstDateString = (dateObj) => {
+    return new Intl.DateTimeFormat('en-CA', {
+        timeZone: TIMEZONE,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).format(dateObj);
+};
+
+/**
+ * Parses time string (e.g. "08:00 AM", "8:00 PM", "06:30", "21:33") into hours and minutes.
+ */
+const parseTimeString = (timeStr) => {
+    if (!timeStr) return { hours: 8, minutes: 0 };
+    let s = timeStr.trim().toUpperCase();
+    let isPM = s.includes('PM');
+    let isAM = s.includes('AM');
+    s = s.replace('AM', '').replace('PM', '').trim();
+    const parts = s.split(':');
+    let hours = parseInt(parts[0], 10) || 0;
+    let minutes = parseInt(parts[1], 10) || 0;
+    if (isPM && hours < 12) hours += 12;
+    if (isAM && hours === 12) hours = 0;
+    return { hours, minutes };
+};
+
+/**
+ * Creates an exact Date object representing the scheduled time on a given date in IST.
+ * IST is UTC+5:30.
+ */
+const createIstDateTime = (dateStr, hours, minutes) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    // Construct ISO string for IST: YYYY-MM-DDTHH:mm:00.000+05:30
+    const pad = (n) => String(n).padStart(2, '0');
+    const isoString = `${year}-${pad(month)}-${pad(day)}T${pad(hours)}:${pad(minutes)}:00.000+05:30`;
+    return new Date(isoString);
+};
+
+/**
+ * Checks for overdue medication doses and sends automated email reminders.
+ * Accurately tracks date + time occurrences across the midnight boundary in IST.
  */
 const checkAndSendMissedDoseReminders = async () => {
     try {
-        // Calculate date and time in IST (Asia/Kolkata) explicitly
         const now = new Date();
-        const istDateFormatter = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' });
-        const todayStr = istDateFormatter.format(now); // Produces YYYY-MM-DD in IST
+        const todayStr = getIstDateString(now);
 
-        const istTimeParts = new Intl.DateTimeFormat('en-US', { 
-            timeZone: 'Asia/Kolkata', 
-            hour: 'numeric', 
-            minute: 'numeric', 
-            hour12: false 
-        }).formatToParts(now);
-
-        let currentHours = 0;
-        let currentMinutes = 0;
-        for (const part of istTimeParts) {
-            if (part.type === 'hour') currentHours = parseInt(part.value, 10) % 24;
-            if (part.type === 'minute') currentMinutes = parseInt(part.value, 10);
-        }
-        const currentTotalMinutes = currentHours * 60 + currentMinutes;
-
-        console.log(`[REMINDER SCHEDULER] Checking at IST time ${String(currentHours).padStart(2,'0')}:${String(currentMinutes).padStart(2,'0')} (${currentTotalMinutes} mins), date: ${todayStr}`);
+        // Calculate yesterday's date in IST
+        const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+        const yesterdayStr = getIstDateString(yesterday);
 
         // Fetch all active schedules
         const schedules = await Schedule.find({ active: true });
-        console.log(`[REMINDER SCHEDULER] Found ${schedules.length} active schedule(s) to check`);
 
         for (const schedule of schedules) {
             const timeStr = schedule.scheduledTime || schedule.time;
-            if (!timeStr) {
-                console.log(`[REMINDER SCHEDULER] Skipping schedule ${schedule._id}: no time set`);
-                continue;
-            }
+            if (!timeStr) continue;
 
-            // Enforce duration check (default 7 days)
+            // Check schedule start date and duration window
             const start = schedule.startDate ? new Date(schedule.startDate) : new Date(schedule.createdAt);
             const durationDays = schedule.durationDays || 7;
-            const diffMs = now - start;
-            const diffDays = diffMs / (1000 * 60 * 60 * 24);
-            if (diffDays > durationDays) {
-                console.log(`[REMINDER SCHEDULER] Skipping ${schedule.medicineName}: duration of ${durationDays} days exceeded (${Math.floor(diffDays)} days passed)`);
-                continue;
-            }
+            const diffDays = (now - start) / (1000 * 60 * 60 * 24);
+            if (diffDays > durationDays) continue;
 
-            // Check if medicine has been deleted or deactivated
+            // Check if parent medicine is deleted / inactive
             const medCheck = await Medicine.findOne({
                 $or: [
                     { _id: schedule.medicineId },
@@ -62,47 +83,44 @@ const checkAndSendMissedDoseReminders = async () => {
             }).catch(() => null);
 
             if (medCheck && medCheck.active === false) {
-                console.log(`[REMINDER SCHEDULER] Skipping ${schedule.medicineName}: medicine is deleted/inactive`);
                 await Schedule.findByIdAndUpdate(schedule._id, { active: false });
                 continue;
             }
 
-            // Parse time string e.g. "08:00 AM", "08:00", "18:30", "8:00 PM"
-            let schedHours = 8, schedMinutes = 0;
-            const cleanTime = timeStr.trim().toUpperCase();
-            if (cleanTime.includes('AM') || cleanTime.includes('PM')) {
-                const isPM = cleanTime.includes('PM');
-                const timeOnly = cleanTime.replace('AM', '').replace('PM', '').trim();
-                const timeParts = timeOnly.split(':');
-                schedHours = parseInt(timeParts[0], 10);
-                schedMinutes = parseInt(timeParts[1] || '0', 10);
-                if (isPM && schedHours < 12) schedHours += 12;
-                if (!isPM && schedHours === 12) schedHours = 0;
-            } else {
-                const timeParts = cleanTime.split(':');
-                if (timeParts.length >= 2) {
-                    schedHours = parseInt(timeParts[0], 10);
-                    schedMinutes = parseInt(timeParts[1], 10);
+            const { hours, minutes } = parseTimeString(timeStr);
+
+            // Check both yesterday and today occurrences to handle late-night & midnight boundary
+            const datesToCheck = [yesterdayStr, todayStr];
+
+            for (const occurrenceDate of datesToCheck) {
+                const scheduledTimestamp = createIstDateTime(occurrenceDate, hours, minutes);
+                const graceEndTimestamp = new Date(scheduledTimestamp.getTime() + 15 * 60 * 1000); // 15-minute window
+
+                // If scheduled time is in the future, it is UPCOMING or currently DUE
+                if (now < graceEndTimestamp) {
+                    continue; // Not yet missed
                 }
-            }
 
-            const schedTotalMinutes = schedHours * 60 + schedMinutes;
-            console.log(`[REMINDER SCHEDULER] ${schedule.medicineName} scheduled at ${String(schedHours).padStart(2,'0')}:${String(schedMinutes).padStart(2,'0')} (${schedTotalMinutes} mins) | Current: ${currentTotalMinutes} mins | 15min window: ${schedTotalMinutes + 15}`);
-
-            // Trigger alert if scheduled time was over 15 minutes ago
-            if (currentTotalMinutes >= schedTotalMinutes + 15) {
-                const existingHistory = await MedicationHistory.findOne({
-                    userId: schedule.userId,
-                    medicineId: schedule.medicineId,
-                    date: todayStr
-                });
-
-                if (existingHistory) {
-                    console.log(`[REMINDER SCHEDULER] ${schedule.medicineName} already logged as ${existingHistory.status} today, skipping`);
+                // If scheduled timestamp is before the schedule's startDate (e.g. yesterday before start), skip
+                const startDayStr = getIstDateString(start);
+                if (occurrenceDate < startDayStr) {
                     continue;
                 }
 
-                // Lookup user by string _id (handle both ObjectId and plain strings)
+                // Check if this occurrence was already logged (TAKEN, MISSED, LATE, etc.)
+                const existingHistory = await MedicationHistory.findOne({
+                    userId: schedule.userId,
+                    medicineId: schedule.medicineId,
+                    scheduledTime: schedule.scheduledTime,
+                    date: occurrenceDate
+                });
+
+                if (existingHistory) {
+                    // Already logged for this occurrence date, idempotent skip
+                    continue;
+                }
+
+                // Dose is MISSED -> Create log and send notifications
                 const user = await User.findOne({ _id: schedule.userId }).catch(() => null);
                 const med = await Medicine.findOne({ _id: schedule.medicineId }).catch(() => null);
                 const medicineName = schedule.medicineName || (med ? med.name : 'Medication');
@@ -110,37 +128,44 @@ const checkAndSendMissedDoseReminders = async () => {
                 const userName = user ? user.name : 'Patient';
                 const userEmail = user ? user.email : null;
 
-                console.log(`[MISSED DOSE DETECTED] ${medicineName} for user ${userEmail || schedule.userId}`);
+                console.log(`[MISSED DOSE DETECTED] ${medicineName} (${timeStr}) on ${occurrenceDate} for user ${userEmail || schedule.userId}`);
 
-                // Log missed dose in database
-                await MedicationHistory.create({
-                    userId: schedule.userId,
-                    medicineId: schedule.medicineId,
-                    medicineName: medicineName,
-                    medicineDosage: dosage,
-                    scheduledTime: timeStr,
-                    date: todayStr,
-                    status: 'MISSED'
-                });
+                // Idempotent insert with error handling for duplicate index keys
+                try {
+                    await MedicationHistory.create({
+                        userId: schedule.userId,
+                        scheduleId: schedule._id ? schedule._id.toString() : undefined,
+                        medicineId: schedule.medicineId,
+                        medicineName: medicineName,
+                        medicineDosage: dosage,
+                        scheduledTime: schedule.scheduledTime,
+                        date: occurrenceDate,
+                        status: 'MISSED'
+                    });
+                } catch (dupErr) {
+                    if (dupErr.code === 11000) {
+                        console.log(`[IDEMPOTENT] Duplicate key caught for ${medicineName} on ${occurrenceDate}`);
+                        continue;
+                    }
+                    throw dupErr;
+                }
 
-                // Send Email Reminder to User
+                // Send Email Notification to Patient
                 if (userEmail) {
                     await sendEmail(
                         userEmail,
                         `⚠️ SmartMed Alert: You Missed ${medicineName}!`,
-                        `Hello ${userName},\n\nYou missed your scheduled dose of ${medicineName} (${dosage}) which was set for ${timeStr} today.\n\nPlease take your medication as soon as possible to stay on track.\n\nBest regards,\nSmartMed Care Team`,
+                        `Hello ${userName},\n\nYou missed your scheduled dose of ${medicineName} (${dosage}) set for ${timeStr} on ${occurrenceDate}.\n\nPlease take your medication as soon as possible to stay on track.\n\nBest regards,\nSmartMed Care Team`,
                         `<div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
                             <h2 style="color: #D32F2F;">⚠️ Missed Medication Alert</h2>
                             <p>Hello <b>${userName}</b>,</p>
-                            <p>You have not taken your dose of <b>${medicineName} ${dosage}</b> which was scheduled for <b>${timeStr}</b> today.</p>
+                            <p>You missed your dose of <b>${medicineName} ${dosage}</b> scheduled for <b>${timeStr}</b> on <b>${occurrenceDate}</b>.</p>
                             <div style="background-color: #FFEBEE; padding: 12px; border-left: 4px solid #D32F2F; margin: 15px 0;">
                                 <strong>Action Required:</strong> Please take your medication as soon as possible or consult your caregiver.
                             </div>
-                            <p style="font-size: 12px; color: #777;">Sent automatically by SmartMed Reminder System</p>
+                            <p style="font-size: 12px; color: #777;">Sent automatically by SmartMed Care System</p>
                         </div>`
                     );
-                } else {
-                    console.log(`[REMINDER SCHEDULER] No email found for user ${schedule.userId}, cannot send missed dose alert`);
                 }
 
                 // Send Caregiver Email Alert
@@ -150,7 +175,7 @@ const checkAndSendMissedDoseReminders = async () => {
                         await sendEmail(
                             caregiver.email,
                             `🚨 Caregiver Alert: ${userName} Missed ${medicineName}`,
-                            `Hello ${caregiver.name},\n\nPatient ${userName} missed their dose of ${medicineName} (${dosage}) scheduled for ${timeStr} today.\n\nPlease check in on them.`
+                            `Hello ${caregiver.name},\n\nPatient ${userName} missed their dose of ${medicineName} (${dosage}) scheduled for ${timeStr} on ${occurrenceDate}.\n\nPlease check in on them.`
                         );
                     }
                 }
@@ -158,7 +183,6 @@ const checkAndSendMissedDoseReminders = async () => {
         }
     } catch (err) {
         console.error(`[REMINDER SCHEDULER ERROR] ${err.message}`);
-        console.error(err.stack);
     }
 };
 
@@ -166,10 +190,9 @@ const checkAndSendMissedDoseReminders = async () => {
  * Starts periodic background polling for missed doses.
  */
 const startReminderScheduler = () => {
-    // Run initial check and set 60-second polling interval
     checkAndSendMissedDoseReminders();
     setInterval(checkAndSendMissedDoseReminders, 60000);
-    console.log('[REMINDER SCHEDULER] Automated missed dose email checker active (polling every 60s).');
+    console.log('[REMINDER SCHEDULER] Date-aware missed dose checker active (polling every 60s in Asia/Kolkata).');
 };
 
 module.exports = { startReminderScheduler, checkAndSendMissedDoseReminders };
