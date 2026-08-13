@@ -5,9 +5,13 @@ const User = require('../models/User');
 const Caregiver = require('../models/Caregiver');
 const { sendEmail } = require('../utils/emailService');
 
+const getIstTodayStr = () => {
+    return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+};
+
 const createHistory = async (req, res) => {
     try {
-        const todayStr = new Date().toISOString().split('T')[0];
+        const todayStr = getIstTodayStr();
         const medName = req.body.medicineName || 'Medication';
         const dosage = req.body.medicineDosage || '';
         const scheduledTime = req.body.scheduledTime || '08:00 AM';
@@ -127,7 +131,7 @@ const getHistory = async (req, res) => {
 
 const getTodayHistory = async (req, res) => {
     try {
-        const today = new Date().toISOString().split('T')[0];
+        const today = getIstTodayStr();
         const history = await MedicationHistory.find({ userId: req.user.id, date: today });
         res.status(200).json({ success: true, data: history });
     } catch (e) { res.status(500).json({ success: false, message: e.message }); }

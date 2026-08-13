@@ -25,7 +25,13 @@ public class AuthRepository {
 
     public AuthRepository() {
         this.api = ApiClient.getApiService();
-        this.firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth auth = null;
+        try {
+            auth = FirebaseAuth.getInstance();
+        } catch (Exception e) {
+            android.util.Log.w("AuthRepository", "FirebaseAuth not initialized: " + e.getMessage());
+        }
+        this.firebaseAuth = auth;
     }
 
     /**

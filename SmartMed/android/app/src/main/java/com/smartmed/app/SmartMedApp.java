@@ -21,8 +21,12 @@ public class SmartMedApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // Initialize Firebase
-        FirebaseApp.initializeApp(this);
+        // Initialize Firebase safely
+        try {
+            FirebaseApp.initializeApp(this);
+        } catch (Exception e) {
+            android.util.Log.w("SmartMedApp", "Firebase initialization skipped: " + e.getMessage());
+        }
 
         // Initialize SharedPreferences manager
         SharedPrefManager.init(this);

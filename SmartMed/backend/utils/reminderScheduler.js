@@ -10,17 +10,27 @@ const { sendEmail } = require('./emailService');
  */
 const checkAndSendMissedDoseReminders = async () => {
     try {
+        // Calculate date and time in IST (Asia/Kolkata) explicitly
         const now = new Date();
-        // Use LOCAL date/time (not UTC) to avoid timezone issues (e.g. IST = UTC+5:30)
-        const yyyy = now.getFullYear();
-        const mm = String(now.getMonth() + 1).padStart(2, '0');
-        const dd = String(now.getDate()).padStart(2, '0');
-        const todayStr = `${yyyy}-${mm}-${dd}`;
-        const currentHours = now.getHours();
-        const currentMinutes = now.getMinutes();
+        const istDateFormatter = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' });
+        const todayStr = istDateFormatter.format(now); // Produces YYYY-MM-DD in IST
+
+        const istTimeParts = new Intl.DateTimeFormat('en-US', { 
+            timeZone: 'Asia/Kolkata', 
+            hour: 'numeric', 
+            minute: 'numeric', 
+            hour12: false 
+        }).formatToParts(now);
+
+        let currentHours = 0;
+        let currentMinutes = 0;
+        for (const part of istTimeParts) {
+            if (part.type === 'hour') currentHours = parseInt(part.value, 10) % 24;
+            if (part.type === 'minute') currentMinutes = parseInt(part.value, 10);
+        }
         const currentTotalMinutes = currentHours * 60 + currentMinutes;
 
-        console.log(`[REMINDER SCHEDULER] Checking at local time ${String(currentHours).padStart(2,'0')}:${String(currentMinutes).padStart(2,'0')} (${currentTotalMinutes} mins), date: ${todayStr}`);
+        console.log(`[REMINDER SCHEDULER] Checking at IST time ${String(currentHours).padStart(2,'0')}:${String(currentMinutes).padStart(2,'0')} (${currentTotalMinutes} mins), date: ${todayStr}`);
 
         // Fetch all active schedules
         const schedules = await Schedule.find({ active: true });

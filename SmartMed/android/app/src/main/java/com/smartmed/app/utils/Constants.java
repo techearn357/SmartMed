@@ -7,9 +7,9 @@ public final class Constants {
 
     private Constants() {} // Prevent instantiation
 
-    // API Base URLs - Change these to your deployed URLs
-    public static final String BASE_URL = "http://10.0.2.2:5000/api/";
-    public static final String AI_BASE_URL = "http://10.0.2.2:8000/";
+    // API Base URLs - Deployed on Render
+    public static final String BASE_URL = "https://smartmed-api.onrender.com/api/";
+    public static final String AI_BASE_URL = "https://smartmed-mdml.onrender.com/";
 
     // SharedPreferences Keys
     public static final String PREF_NAME = "smartmed_prefs";
