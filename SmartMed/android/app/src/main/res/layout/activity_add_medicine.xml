@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="@dimen/screen_margin">
+
+        <!-- Header -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <ImageButton android:id="@+id/btnBack" android:layout_width="@dimen/touch_target_min"
+                android:layout_height="@dimen/touch_target_min" android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless" android:contentDescription="Back"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/add_medicine" style="@style/TextStyle.Heading2" android:layout_marginStart="@dimen/spacing_sm"/>
+        </LinearLayout>
+
+        <!-- Medicine Name -->
+        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_lg"
+            android:hint="@string/medicine_name" style="@style/Widget.SmartMed.TextInputLayout">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/etMedicineName"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:inputType="text" android:textSize="@dimen/text_body"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Dosage + Unit -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginTop="@dimen/spacing_md">
+            <com.google.android.material.textfield.TextInputLayout android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="2"
+                android:hint="@string/dosage" style="@style/Widget.SmartMed.TextInputLayout"
+                android:layout_marginEnd="@dimen/spacing_sm">
+                <com.google.android.material.textfield.TextInputEditText android:id="@+id/etDosage"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" android:textSize="@dimen/text_body"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <Spinner android:id="@+id/spinnerUnit" android:layout_width="0dp"
+                android:layout_height="match_parent" android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- Frequency -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/frequency" style="@style/TextStyle.Label"
+            android:layout_marginTop="@dimen/spacing_md"/>
+        <Spinner android:id="@+id/spinnerFrequency" android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height" android:layout_marginTop="@dimen/spacing_xs"
+            android:background="@drawable/bg_rounded_card"/>
+
+        <!-- Times -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/time" style="@style/TextStyle.Label"
+            android:layout_marginTop="@dimen/spacing_md"/>
+        <LinearLayout android:id="@+id/llTimes" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal"
+            android:layout_marginTop="@dimen/spacing_xs"/>
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnAddTime"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/add_time" android:textAllCaps="false"
+            style="@style/Widget.SmartMed.Button.Text" app:icon="@android:drawable/ic_input_add"/>
+
+        <!-- Start Date -->
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnStartDate"
+            android:layout_width="match_parent" android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/spacing_sm" android:text="@string/start_date"
+            android:textAllCaps="false" style="@style/Widget.SmartMed.Button.Secondary"
+            app:icon="@android:drawable/ic_menu_month"/>
+
+        <!-- Duration -->
+        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md"
+            android:hint="@string/duration_days" style="@style/Widget.SmartMed.TextInputLayout">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/etDuration"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:inputType="number" android:textSize="@dimen/text_body"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Tablets -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginTop="@dimen/spacing_md">
+            <com.google.android.material.textfield.TextInputLayout android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:hint="@string/total_tablets" style="@style/Widget.SmartMed.TextInputLayout"
+                android:layout_marginEnd="@dimen/spacing_sm">
+                <com.google.android.material.textfield.TextInputEditText android:id="@+id/etTotalTablets"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:inputType="number" android:textSize="@dimen/text_body"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:hint="@string/tablets_per_dose" style="@style/Widget.SmartMed.TextInputLayout">
+                <com.google.android.material.textfield.TextInputEditText android:id="@+id/etTabletsPerDose"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:inputType="number" android:textSize="@dimen/text_body" android:text="1"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <!-- Instructions -->
+        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md"
+            android:hint="@string/instructions" style="@style/Widget.SmartMed.TextInputLayout">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/etInstructions"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:inputType="textMultiLine" android:minLines="2" android:textSize="@dimen/text_body"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Save Button -->
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnSave"
+            android:layout_width="match_parent" android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/spacing_lg" android:text="@string/save_medicine"
+            android:textAllCaps="false" android:textSize="@dimen/text_button"
+            app:cornerRadius="@dimen/corner_radius_large"/>
+
+        <ProgressBar android:id="@+id/progressBar" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_gravity="center"
+            android:visibility="gone" android:layout_marginTop="@dimen/spacing_md"/>
+    </LinearLayout>
+</ScrollView>

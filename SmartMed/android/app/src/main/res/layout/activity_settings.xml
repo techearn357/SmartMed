@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="@dimen/screen_margin">
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <ImageButton android:id="@+id/btnBack" android:layout_width="@dimen/touch_target_min"
+                android:layout_height="@dimen/touch_target_min" android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless" android:contentDescription="Back"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/settings" style="@style/TextStyle.Heading2"
+                android:layout_marginStart="@dimen/spacing_sm"/>
+        </LinearLayout>
+
+        <!-- Notifications & Alarms -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Notifications &amp; Alarms" style="@style/TextStyle.Heading3"
+            android:layout_marginTop="@dimen/spacing_lg"/>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial android:id="@+id/switchNotifications"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Enable Medicine Reminders" android:textSize="@dimen/text_body"
+            android:layout_marginTop="@dimen/spacing_sm"/>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial android:id="@+id/switchSound"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Play Alarm Sound" android:textSize="@dimen/text_body"
+            android:layout_marginTop="@dimen/spacing_xs"/>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial android:id="@+id/switchVibrate"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Vibrate on Alarm" android:textSize="@dimen/text_body"
+            android:layout_marginTop="@dimen/spacing_xs"/>
+
+        <!-- Snooze -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Snooze Duration (minutes)" style="@style/TextStyle.Label"
+            android:layout_marginTop="@dimen/spacing_lg"/>
+        <com.google.android.material.slider.Slider android:id="@+id/sliderSnooze"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:valueFrom="5" android:valueTo="30" android:stepSize="5"/>
+
+        <!-- Caregiver Alerts -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Caregiver Safety Alerts" style="@style/TextStyle.Heading3"
+            android:layout_marginTop="@dimen/spacing_lg"/>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial android:id="@+id/switchCaregiverAlerts"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Send Caregiver Alert on Missed Doses" android:textSize="@dimen/text_body"
+            android:layout_marginTop="@dimen/spacing_sm"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Alert after consecutive missed doses:" style="@style/TextStyle.Label"
+            android:layout_marginTop="@dimen/spacing_md"/>
+        <com.google.android.material.slider.Slider android:id="@+id/sliderMissedThreshold"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:valueFrom="1" android:valueTo="5" android:stepSize="1"/>
+
+        <!-- Stock Alerts -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Low Stock Warning Threshold (tablets)" style="@style/TextStyle.Label"
+            android:layout_marginTop="@dimen/spacing_lg"/>
+        <com.google.android.material.slider.Slider android:id="@+id/sliderStockThreshold"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:valueFrom="3" android:valueTo="20" android:stepSize="1"/>
+
+        <!-- Save Button -->
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnSave"
+            android:layout_width="match_parent" android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/spacing_xl" android:text="Save Settings"
+            android:textAllCaps="false" android:textSize="@dimen/text_button"
+            app:cornerRadius="@dimen/corner_radius_large"/>
+
+    </LinearLayout>
+</ScrollView>

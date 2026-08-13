@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="dosage_units">
+        <item>mg</item>
+        <item>ml</item>
+        <item>tablet</item>
+        <item>capsule</item>
+        <item>drops</item>
+        <item>units</item>
+    </string-array>
+    <string-array name="frequencies">
+        <item>Once Daily</item>
+        <item>Twice Daily</item>
+        <item>Three Times Daily</item>
+        <item>Four Times Daily</item>
+        <item>As Needed</item>
+        <item>Custom</item>
+    </string-array>
+    <string-array name="relationships">
+        <item>Spouse</item>
+        <item>Son</item>
+        <item>Daughter</item>
+        <item>Parent</item>
+        <item>Sibling</item>
+        <item>Friend</item>
+        <item>Doctor</item>
+        <item>Nurse</item>
+        <item>Other</item>
+    </string-array>
+</resources>

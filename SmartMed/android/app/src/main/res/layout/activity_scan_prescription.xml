@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background" android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:padding="@dimen/screen_margin">
+
+        <ImageButton android:id="@+id/btnBack" android:layout_width="@dimen/touch_target_min"
+            android:layout_height="@dimen/touch_target_min" android:src="@android:drawable/ic_menu_revert"
+            android:background="?attr/selectableItemBackgroundBorderless" android:contentDescription="Back"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView android:id="@+id/tvTitle" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/scan_prescription_title" style="@style/TextStyle.Heading1"
+            android:layout_marginTop="@dimen/spacing_md"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/btnBack"/>
+
+        <TextView android:id="@+id/tvSubtitle" android:layout_width="0dp" android:layout_height="wrap_content"
+            android:text="@string/scan_prescription_subtitle" style="@style/TextStyle.BodySecondary"
+            android:layout_marginTop="@dimen/spacing_xs"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"/>
+
+        <ImageView android:id="@+id/ivIllustration" android:layout_width="140dp" android:layout_height="140dp"
+            android:src="@android:drawable/ic_menu_camera" android:tint="@color/primary"
+            android:background="@drawable/bg_circle_icon" android:padding="@dimen/spacing_xl"
+            android:layout_marginTop="@dimen/spacing_xxl"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle"/>
+
+        <LinearLayout android:id="@+id/llButtons" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_marginTop="@dimen/spacing_xxl"
+            app:layout_constraintTop_toBottomOf="@id/ivIllustration"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.button.MaterialButton android:id="@+id/btnCamera"
+                android:layout_width="match_parent" android:layout_height="@dimen/button_height"
+                android:text="@string/take_photo" android:textAllCaps="false"
+                android:textSize="@dimen/text_button" app:cornerRadius="@dimen/corner_radius_large"
+                app:icon="@android:drawable/ic_menu_camera"/>
+
+            <com.google.android.material.button.MaterialButton android:id="@+id/btnGallery"
+                android:layout_width="match_parent" android:layout_height="@dimen/button_height"
+                android:layout_marginTop="@dimen/spacing_md" android:text="@string/choose_gallery"
+                android:textAllCaps="false" style="@style/Widget.SmartMed.Button.Secondary"
+                android:textSize="@dimen/text_button" app:cornerRadius="@dimen/corner_radius_large"
+                app:icon="@android:drawable/ic_menu_gallery"/>
+        </LinearLayout>
+
+        <ProgressBar android:id="@+id/progressBar" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:visibility="gone" android:layout_marginTop="@dimen/spacing_lg"
+            app:layout_constraintTop_toBottomOf="@id/llButtons" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView android:id="@+id/tvStatus" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:visibility="gone" style="@style/TextStyle.BodySecondary" android:layout_marginTop="@dimen/spacing_xs"
+            app:layout_constraintTop_toBottomOf="@id/progressBar" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

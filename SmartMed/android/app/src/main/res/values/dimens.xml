@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text Sizes - Elderly Friendly (larger than default) -->
+    <dimen name="text_heading1">28sp</dimen>
+    <dimen name="text_heading2">22sp</dimen>
+    <dimen name="text_heading3">18sp</dimen>
+    <dimen name="text_body">16sp</dimen>
+    <dimen name="text_button">16sp</dimen>
+    <dimen name="text_caption">14sp</dimen>
+    <dimen name="text_label">12sp</dimen>
+    <dimen name="text_small">11sp</dimen>
+    <dimen name="text_otp">32sp</dimen>
+
+    <!-- Spacing -->
+    <dimen name="spacing_xxs">2dp</dimen>
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_md">16dp</dimen>
+    <dimen name="spacing_lg">24dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
+    <dimen name="spacing_xxl">48dp</dimen>
+
+    <!-- Margins -->
+    <dimen name="screen_margin">20dp</dimen>
+    <dimen name="card_margin">12dp</dimen>
+    <dimen name="content_margin">16dp</dimen>
+
+    <!-- Corner Radius -->
+    <dimen name="corner_radius_small">8dp</dimen>
+    <dimen name="corner_radius_medium">12dp</dimen>
+    <dimen name="corner_radius_large">16dp</dimen>
+    <dimen name="corner_radius_xl">24dp</dimen>
+    <dimen name="corner_radius_round">50dp</dimen>
+
+    <!-- Button -->
+    <dimen name="button_height">56dp</dimen>
+    <dimen name="button_height_small">44dp</dimen>
+    <dimen name="button_icon_size">24dp</dimen>
+
+    <!-- Card -->
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_padding">16dp</dimen>
+
+    <!-- Icons -->
+    <dimen name="icon_small">20dp</dimen>
+    <dimen name="icon_medium">24dp</dimen>
+    <dimen name="icon_large">32dp</dimen>
+    <dimen name="icon_xl">48dp</dimen>
+    <dimen name="icon_splash">96dp</dimen>
+
+    <!-- Touch Targets (minimum 48dp for accessibility) -->
+    <dimen name="touch_target_min">48dp</dimen>
+
+    <!-- Profile -->
+    <dimen name="profile_image_size">100dp</dimen>
+    <dimen name="profile_image_small">48dp</dimen>
+
+    <!-- OTP -->
+    <dimen name="otp_box_size">48dp</dimen>
+
+    <!-- Stat Card -->
+    <dimen name="stat_card_width">80dp</dimen>
+    <dimen name="stat_value_size">24sp</dimen>
+
+    <!-- FAB -->
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Bottom Nav -->
+    <dimen name="bottom_nav_height">64dp</dimen>
+
+    <!-- Adherence Chart -->
+    <dimen name="chart_height">200dp</dimen>
+
+    <!-- Toolbar -->
+    <dimen name="toolbar_height">56dp</dimen>
+</resources>

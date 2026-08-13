@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="@dimen/screen_margin">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <ImageButton android:id="@+id/btnBack" android:layout_width="@dimen/touch_target_min"
+                android:layout_height="@dimen/touch_target_min" android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless" android:contentDescription="Back"/>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="Medicine Details" style="@style/TextStyle.Heading2" android:layout_marginStart="@dimen/spacing_sm"/>
+            <ImageButton android:id="@+id/btnDelete" android:layout_width="@dimen/touch_target_min"
+                android:layout_height="@dimen/touch_target_min" android:src="@android:drawable/ic_menu_delete"
+                android:background="?attr/selectableItemBackgroundBorderless" android:contentDescription="Delete"
+                android:tint="@color/error"/>
+        </LinearLayout>
+        <!-- Name --> <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/medicine_name" style="@style/TextStyle.Label" android:layout_marginTop="@dimen/spacing_lg"/>
+        <TextView android:id="@+id/tvName" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextStyle.Heading2" android:layout_marginTop="@dimen/spacing_xs"/>
+        <!-- Dosage --> <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/dosage" style="@style/TextStyle.Label" android:layout_marginTop="@dimen/spacing_md"/>
+        <TextView android:id="@+id/tvDosage" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextStyle.Body" android:layout_marginTop="@dimen/spacing_xs"/>
+        <!-- Frequency --> <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/frequency" style="@style/TextStyle.Label" android:layout_marginTop="@dimen/spacing_md"/>
+        <TextView android:id="@+id/tvFrequency" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextStyle.Body" android:layout_marginTop="@dimen/spacing_xs"/>
+        <!-- Times --> <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/time" style="@style/TextStyle.Label" android:layout_marginTop="@dimen/spacing_md"/>
+        <TextView android:id="@+id/tvTimes" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextStyle.Body" android:textColor="@color/primary" android:layout_marginTop="@dimen/spacing_xs"/>
+        <!-- Duration --> <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/duration" style="@style/TextStyle.Label" android:layout_marginTop="@dimen/spacing_md"/>
+        <TextView android:id="@+id/tvDuration" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextStyle.Body" android:layout_marginTop="@dimen/spacing_xs"/>
+        <!-- Stock --> <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/stock_management" style="@style/TextStyle.Label" android:layout_marginTop="@dimen/spacing_md"/>
+        <TextView android:id="@+id/tvTotalTablets" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextStyle.Body" android:layout_marginTop="@dimen/spacing_xs"/>
+        <TextView android:id="@+id/tvRemainingTablets" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextStyle.Body"/>
+        <TextView android:id="@+id/tvDaysLeft" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextStyle.Caption" android:textColor="@color/primary"/>
+        <!-- Status --> <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Status" style="@style/TextStyle.Label" android:layout_marginTop="@dimen/spacing_md"/>
+        <TextView android:id="@+id/tvStatus" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextStyle.Body" android:layout_marginTop="@dimen/spacing_xs"/>
+        <!-- Instructions --> <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/instructions" style="@style/TextStyle.Label" android:layout_marginTop="@dimen/spacing_md"/>
+        <TextView android:id="@+id/tvInstructions" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/TextStyle.Body" android:layout_marginTop="@dimen/spacing_xs"/>
+    </LinearLayout>
+</ScrollView>

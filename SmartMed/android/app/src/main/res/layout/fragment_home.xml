@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="@dimen/screen_margin">
+
+        <!-- Greeting Header -->
+        <TextView android:id="@+id/tvGreeting" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            style="@style/TextStyle.Heading1" android:text="Good Morning" />
+        <TextView android:id="@+id/tvDate" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            style="@style/TextStyle.BodySecondary" android:layout_marginTop="@dimen/spacing_xs" />
+
+        <!-- Next Reminder Card -->
+        <com.google.android.material.card.MaterialCardView android:id="@+id/cardNextReminder"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg" app:cardCornerRadius="@dimen/corner_radius_large"
+            app:cardElevation="@dimen/card_elevation" app:cardBackgroundColor="@color/card_background">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="@dimen/card_padding">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/next_reminder" style="@style/TextStyle.Label" />
+                <TextView android:id="@+id/tvNextMedicine" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_sm"
+                    style="@style/TextStyle.Heading2" />
+                <TextView android:id="@+id/tvNextDosage" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" style="@style/TextStyle.BodySecondary" />
+                <TextView android:id="@+id/tvNextTime" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xs"
+                    android:textColor="@color/primary" android:textSize="@dimen/text_heading3"
+                    android:textStyle="bold" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnMarkTaken"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_sm" android:text="@string/mark_as_taken"
+                    android:textAllCaps="false" android:focusable="true" android:clickable="true"
+                    app:cornerRadius="@dimen/corner_radius_large" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- All Today's Reminders List -->
+        <TextView android:id="@+id/tvTodayRemindersHeader" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg" android:text="All Today's Reminders"
+            style="@style/TextStyle.Heading3" android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvTodayReminders"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm" android:nestedScrollingEnabled="false"
+            android:visibility="gone" />
+
+        <!-- Statistics Grid -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg" android:text="Statistics"
+            style="@style/TextStyle.Heading3" />
+
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm" android:orientation="horizontal"
+            android:weightSum="4">
+
+            <!-- Today's Doses -->
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:layout_marginEnd="@dimen/spacing_xs" app:cardCornerRadius="@dimen/corner_radius_medium"
+                app:cardElevation="1dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="@dimen/spacing_sm" android:gravity="center">
+                    <TextView android:id="@+id/tvTotalDoses" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="0"
+                        android:textSize="@dimen/stat_value_size" android:textStyle="bold"
+                        android:textColor="@color/info" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/todays_doses" android:textSize="@dimen/text_small"
+                        android:textColor="@color/text_secondary" android:gravity="center" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Taken -->
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:layout_marginStart="@dimen/spacing_xs" android:layout_marginEnd="@dimen/spacing_xs"
+                app:cardCornerRadius="@dimen/corner_radius_medium" app:cardElevation="1dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="@dimen/spacing_sm" android:gravity="center">
+                    <TextView android:id="@+id/tvTaken" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="0"
+                        android:textSize="@dimen/stat_value_size" android:textStyle="bold"
+                        android:textColor="@color/success" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/taken" android:textSize="@dimen/text_small"
+                        android:textColor="@color/text_secondary" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Missed -->
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:layout_marginStart="@dimen/spacing_xs" android:layout_marginEnd="@dimen/spacing_xs"
+                app:cardCornerRadius="@dimen/corner_radius_medium" app:cardElevation="1dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="@dimen/spacing_sm" android:gravity="center">
+                    <TextView android:id="@+id/tvMissed" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="0"
+                        android:textSize="@dimen/stat_value_size" android:textStyle="bold"
+                        android:textColor="@color/error" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/missed" android:textSize="@dimen/text_small"
+                        android:textColor="@color/text_secondary" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Adherence -->
+            <com.google.android.material.card.MaterialCardView android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:layout_marginStart="@dimen/spacing_xs" app:cardCornerRadius="@dimen/corner_radius_medium"
+                app:cardElevation="1dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="@dimen/spacing_sm" android:gravity="center">
+                    <TextView android:id="@+id/tvAdherence" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="0%"
+                        android:textSize="@dimen/stat_value_size" android:textStyle="bold"
+                        android:textColor="@color/primary" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/adherence" android:textSize="@dimen/text_small"
+                        android:textColor="@color/text_secondary" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <!-- Quick Actions -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg" android:text="Quick Actions"
+            style="@style/TextStyle.Heading3" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm" android:orientation="horizontal"
+            android:weightSum="2">
+
+            <com.google.android.material.button.MaterialButton android:id="@+id/btnAddMedicine"
+                android:layout_width="0dp" android:layout_height="@dimen/button_height"
+                android:layout_weight="1" android:layout_marginEnd="@dimen/spacing_xs"
+                android:text="@string/add_medicine" android:textAllCaps="false"
+                app:cornerRadius="@dimen/corner_radius_large"
+                app:icon="@android:drawable/ic_input_add" app:iconGravity="textStart" />
+
+            <com.google.android.material.button.MaterialButton android:id="@+id/btnScanPrescription"
+                android:layout_width="0dp" android:layout_height="@dimen/button_height"
+                android:layout_weight="1" android:layout_marginStart="@dimen/spacing_xs"
+                android:text="@string/scan_prescription" android:textAllCaps="false"
+                style="@style/Widget.SmartMed.Button.Secondary"
+                app:cornerRadius="@dimen/corner_radius_large"
+                app:icon="@android:drawable/ic_menu_camera" app:iconGravity="textStart" />
+        </LinearLayout>
+
+        <!-- Loading -->
+        <ProgressBar android:id="@+id/progressBar" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_gravity="center"
+            android:layout_marginTop="@dimen/spacing_lg" android:visibility="gone" />
+
+    </LinearLayout>
+</ScrollView>

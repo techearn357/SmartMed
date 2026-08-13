@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="@dimen/screen_margin">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/profile" style="@style/TextStyle.Heading1"/>
+
+        <!-- User Info Card -->
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_lg"
+            app:cardCornerRadius="@dimen/corner_radius_large" app:cardElevation="@dimen/card_elevation"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="@dimen/spacing_lg" android:gravity="center">
+                <ImageView android:layout_width="@dimen/profile_image_size" android:layout_height="@dimen/profile_image_size"
+                    android:src="@android:drawable/ic_menu_myplaces" android:contentDescription="Profile"
+                    android:background="@drawable/bg_circle_icon" android:padding="@dimen/spacing_lg"
+                    android:tint="@color/primary"/>
+                <TextView android:id="@+id/tvName" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md" style="@style/TextStyle.Heading2"/>
+                <TextView android:id="@+id/tvEmail" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs" style="@style/TextStyle.BodySecondary"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Menu Items -->
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnCaregivers"
+            android:layout_width="match_parent" android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/spacing_lg" android:text="@string/caregivers"
+            android:textAllCaps="false" style="@style/Widget.SmartMed.Button.Secondary"
+            app:icon="@android:drawable/ic_menu_myplaces" app:iconGravity="textStart"
+            xmlns:app="http://schemas.android.com/apk/res-auto"/>
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnSettings"
+            android:layout_width="match_parent" android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/spacing_sm" android:text="@string/settings"
+            android:textAllCaps="false" style="@style/Widget.SmartMed.Button.Secondary"
+            app:icon="@android:drawable/ic_menu_preferences" app:iconGravity="textStart"
+            xmlns:app="http://schemas.android.com/apk/res-auto"/>
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnLogout"
+            android:layout_width="match_parent" android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/spacing_lg" android:text="@string/logout"
+            android:textAllCaps="false" android:backgroundTint="@color/error"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cornerRadius="@dimen/corner_radius_large"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl" android:text="@string/version"
+            android:layout_gravity="center" style="@style/TextStyle.Caption"/>
+    </LinearLayout>
+</ScrollView>

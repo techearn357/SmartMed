@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="@dimen/screen_margin">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/smart_adherence" style="@style/TextStyle.Heading1"/>
+
+        <!-- Period Chips -->
+        <com.google.android.material.chip.ChipGroup android:id="@+id/chipGroup"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md" app:singleSelection="true" app:selectionRequired="true">
+            <com.google.android.material.chip.Chip android:id="@+id/chipDaily" style="@style/Widget.SmartMed.Chip"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/daily_stats"/>
+            <com.google.android.material.chip.Chip android:id="@+id/chipWeekly" style="@style/Widget.SmartMed.Chip"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/weekly_stats" android:checked="true"/>
+            <com.google.android.material.chip.Chip android:id="@+id/chipMonthly" style="@style/Widget.SmartMed.Chip"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/monthly_stats"/>
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- Big Percentage -->
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_lg"
+            app:cardCornerRadius="@dimen/corner_radius_large" app:cardElevation="@dimen/card_elevation">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="@dimen/spacing_xl" android:gravity="center">
+                <TextView android:id="@+id/tvPercentage" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="0%" android:textSize="64sp" android:textStyle="bold" android:textColor="@color/primary"/>
+                <TextView android:id="@+id/tvMessage" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_sm" style="@style/TextStyle.Body"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Stats Grid -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg" android:orientation="horizontal" android:weightSum="5">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:orientation="vertical" android:gravity="center" android:padding="@dimen/spacing_xs">
+                <TextView android:id="@+id/tvTotal" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="0" android:textSize="@dimen/text_heading3" android:textStyle="bold" android:textColor="@color/info"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Total" android:textSize="@dimen/text_small" android:textColor="@color/text_secondary"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:orientation="vertical" android:gravity="center" android:padding="@dimen/spacing_xs">
+                <TextView android:id="@+id/tvTaken" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="0" android:textSize="@dimen/text_heading3" android:textStyle="bold" android:textColor="@color/success"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/taken" android:textSize="@dimen/text_small" android:textColor="@color/text_secondary"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:orientation="vertical" android:gravity="center" android:padding="@dimen/spacing_xs">
+                <TextView android:id="@+id/tvMissed" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="0" android:textSize="@dimen/text_heading3" android:textStyle="bold" android:textColor="@color/error"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/missed" android:textSize="@dimen/text_small" android:textColor="@color/text_secondary"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:orientation="vertical" android:gravity="center" android:padding="@dimen/spacing_xs">
+                <TextView android:id="@+id/tvLate" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="0" android:textSize="@dimen/text_heading3" android:textStyle="bold" android:textColor="@color/warning"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Late" android:textSize="@dimen/text_small" android:textColor="@color/text_secondary"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:orientation="vertical" android:gravity="center" android:padding="@dimen/spacing_xs">
+                <TextView android:id="@+id/tvStreak" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="0" android:textSize="@dimen/text_heading3" android:textStyle="bold" android:textColor="@color/secondary"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Streak" android:textSize="@dimen/text_small" android:textColor="@color/text_secondary"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ProgressBar android:id="@+id/progressBar" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center" android:visibility="gone" android:layout_marginTop="@dimen/spacing_lg"/>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,37 @@
+# Root Gradle
+.gradle_home/
+.home/
+.android_home/
+
+# Android
+SmartMed/android/.gradle/
+SmartMed/android/build/
+SmartMed/android/local.properties
+SmartMed/android/app/build/
+SmartMed/android/.android_home/
+SmartMed/android/.gradle_home/
+SmartMed/android/.home/
+*.apk
+*.ap_
+*.dex
+*.class
+
+# Backend
+SmartMed/backend/node_modules/
+SmartMed/backend/.env
+SmartMed/backend/*.log
+
+# AI Service
+SmartMed/ai-service/__pycache__/
+SmartMed/ai-service/.venv/
+SmartMed/ai-service/venv/
+*.pyc
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Secrets & Configs
+google-services.json
+!SmartMed/android/app/google-services.json # Keeping the placeholder for build stability, but user should replace it in production

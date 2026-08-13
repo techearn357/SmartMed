@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/spacing_xs"
+    app:cardCornerRadius="@dimen/corner_radius_medium" app:cardElevation="1dp">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:padding="@dimen/card_padding" android:gravity="center_vertical">
+
+        <ImageView android:layout_width="48dp" android:layout_height="48dp"
+            android:src="@android:drawable/ic_menu_myplaces" android:contentDescription="Caregiver"
+            android:background="@drawable/bg_circle_icon" android:padding="@dimen/spacing_sm"
+            android:tint="@color/primary"/>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="@dimen/spacing_md">
+            <TextView android:id="@+id/tvName" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                style="@style/TextStyle.Heading3"/>
+            <TextView android:id="@+id/tvRelationship" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                style="@style/TextStyle.BodySecondary" android:textColor="@color/primary"/>
+            <TextView android:id="@+id/tvContact" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                style="@style/TextStyle.Caption"/>
+        </LinearLayout>
+
+        <ImageButton android:id="@+id/btnDelete" android:layout_width="@dimen/touch_target_min"
+            android:layout_height="@dimen/touch_target_min" android:src="@android:drawable/ic_menu_delete"
+            android:background="?attr/selectableItemBackgroundBorderless" android:contentDescription="Delete"
+            android:tint="@color/error"/>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

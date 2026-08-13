@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Healthcare Theme Colors -->
+    <color name="primary">#FF0D9488</color>
+    <color name="primary_dark">#FF0F766E</color>
+    <color name="primary_light">#FF5EEAD4</color>
+    <color name="primary_container">#FFE6FAF8</color>
+    <color name="on_primary">#FFFFFFFF</color>
+    <color name="on_primary_container">#FF0D9488</color>
+
+    <!-- Secondary Colors -->
+    <color name="secondary">#FF6366F1</color>
+    <color name="secondary_dark">#FF4F46E5</color>
+    <color name="secondary_light">#FFA5B4FC</color>
+    <color name="secondary_container">#FFEEF2FF</color>
+
+    <!-- Accent Colors -->
+    <color name="accent">#FFF59E0B</color>
+    <color name="accent_dark">#FFD97706</color>
+    <color name="accent_light">#FFFCD34D</color>
+
+    <!-- Status Colors -->
+    <color name="success">#FF10B981</color>
+    <color name="success_light">#FFD1FAE5</color>
+    <color name="success_dark">#FF059669</color>
+    <color name="warning">#FFF59E0B</color>
+    <color name="warning_light">#FFFEF3C7</color>
+    <color name="error">#FFEF4444</color>
+    <color name="error_light">#FFFEE2E2</color>
+    <color name="error_dark">#FFDC2626</color>
+    <color name="info">#FF3B82F6</color>
+    <color name="info_light">#FFDBEAFE</color>
+
+    <!-- Medicine Status Colors -->
+    <color name="status_taken">#FF10B981</color>
+    <color name="status_missed">#FFEF4444</color>
+    <color name="status_snoozed">#FFF59E0B</color>
+    <color name="status_late">#FFF97316</color>
+    <color name="status_pending">#FF94A3B8</color>
+
+    <!-- Background Colors -->
+    <color name="background">#FFF8FFFE</color>
+    <color name="surface">#FFFFFFFF</color>
+    <color name="surface_variant">#FFF1F5F9</color>
+    <color name="card_background">#FFFFFFFF</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#FF1E293B</color>
+    <color name="text_secondary">#FF64748B</color>
+    <color name="text_hint">#FF94A3B8</color>
+    <color name="text_on_dark">#FFFFFFFF</color>
+    <color name="text_link">#FF0D9488</color>
+
+    <!-- Divider -->
+    <color name="divider">#FFE2E8F0</color>
+
+    <!-- Navigation -->
+    <color name="nav_selected">#FF0D9488</color>
+    <color name="nav_unselected">#FF94A3B8</color>
+
+    <!-- Splash -->
+    <color name="splash_background">#FF0D9488</color>
+
+    <!-- Gradient -->
+    <color name="gradient_start">#FF0D9488</color>
+    <color name="gradient_end">#FF6366F1</color>
+
+    <!-- Adherence Colors -->
+    <color name="adherence_excellent">#FF10B981</color>
+    <color name="adherence_good">#FF3B82F6</color>
+    <color name="adherence_average">#FFF59E0B</color>
+    <color name="adherence_poor">#FFEF4444</color>
+
+    <!-- Ripple -->
+    <color name="ripple_primary">#330D9488</color>
+</resources>
